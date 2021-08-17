@@ -1,0 +1,105 @@
+1a. n+n(n+1)/2
+1b. O(n^2)
+2a. 160min, 16*10
+n (initial data) -> 10
+16n (new data) -> ?
+2b. 2560 min, 16^2 * 10
+2c. 640min, 16log2(16) * 10
+3. 
+head
+head == null
+head.getData()
+nodePtr!=null
+nodePtr.getLink()
+nodePtr.getLink()
+nodePtr.setData(temp)
+4.
+head == null
+throw new EmptyListException();
+nodePtr.getLink() != head
+nodePtr.getLink();
+nodePtr.getData() > maxPtr.getData()
+temp = head.getData()
+max.getData()
+temp
+5.
+a) Array, 8*180 (IntNode) > 4*200
+b) Linked List, 8*20 < 4*200
+c) 8n=800, n = 100
+6.
+a) 7 5 3 1
+b) 7 4 1 2 5
+stack:5 2 1  
+output: 7 4 1 2 5
+8.
+a) correct
+b) incorrect you must type cast
+9.
+public boolean remove(int item) {
+    	IntNode cursor;
+	if (head == null) return (false);
+	else if (head == tail) { // 1 node list
+		if (head.getData() == item) {
+			head = null;
+			tail = null;
+			return (true);
+		}
+		else return (false);
+	}
+	else { // 2 or more nodes in list
+		if (head.getData() == item) {
+			head = head.getLink();
+			return (true);
+		}
+		cursor = head;
+		while (cursor.getLink() != null) {
+			if (cursor.getLink().getData() == item) {
+				cursor.setLink(cursor.getLink().getLink());
+				if (cursor.getLink() == null)
+					tail = cursor;
+				return (true);
+			}
+			else if (cursor.getLink().getData() < item)
+				return (false);  // end the loop faster with this statement so it doesn't have to loop through the rest of the numbers -> WE KNOW ITS SORTED
+			else
+				cursor = cursor.getLink();
+		}
+		return (false);  // not found in entire list
+	}
+}
+public int maximum() {
+  if (head == null)
+    throw new EmptyListException("list is empty");
+  else return (head.getData());
+}
+
+10.
+public int evaluate(String postfix) {
+  IntStack p = new IntStack();
+  for (int i=0; i < postfix.length();i++) {
+    char c = postfix.charAt(i);
+    if (Character.isDigit(c)) {
+      int value = (int) ch - (int) '0';
+      p.push(value);
+    }else {
+      int operand2 = p.pop();
+      int operand1 = p.pop();
+      if (c == '+') 
+        p.push(operand1 + operand2);
+      else if (c == '-')
+        p.push(operand1 - operand2);
+      else if(c == '*')
+        p.push(operand1 * operand2);
+      else if(c == '/') {
+        if (operand2 == 0)
+          throw new DivisionByZeroException("error");
+        p.push(operand1 / operand2);
+    }
+    }
+  }
+  S.pop();
+}
+
+
+
+n  

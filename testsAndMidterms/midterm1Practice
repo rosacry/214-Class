@@ -1,0 +1,132 @@
+Questions on this midterm practice:
+for (x = 1; x <= n; x++){
+    a = a + x;
+    for (y = 1; y <= x; y++)
+         b = b + y;
+}
+
+  a. exactly how many operations does this code execute in terms of n? Express this answer in closed form. -> (a) n + (1+2+...+n) = n + n(n+1)/2
+  "n(n+1)/2" is the sum of 1 to n numbers (REMEMBER FORMULA) 
+  b. (b)   what is the order of complexity of this code in terms of n? Express this answer as a Big O function in its simplest form. -> O(n^2) because it has a nested for loop
+
+2. A program runs on a supercomputer to analyze weather data from N weather stations. The original execution time of the program is 10 minutes. If the amount of data is increased to 16N, approximately how long in minutes will it take to run this program if the program has the following number of operations?
+                (a) O(N) -> 10 * 16N/N = 160 min
+
+                (b) O(N2) -> 10 * (16N)^2/N^2 = 2560 min
+
+                (c) O(N log2N) -> 10 * (16Nlog16N)/NlogN = 160*log16N/logN min (depends on what N initially was)
+
+3. Complete the following method for IntList assuming IntList is a singly-linked list with a reference to the head of the list only.
+
+public void moveFirstToLast() {
+// moves the first element of the list to the end of the list
+// by changing data values only
+   IntNode nodePtr = head;  //temp value, like a cursor
+   if (head == null || tail == null) {
+// List has 0 or 1 element. No work to do. Just return.  
+        return;
+   } else {
+           // save data from first node
+           int temp = head.getData(); //the reason its getData because we're saving the value to an integer
+           // copy data values into previous nodes, one by one
+           while (nodePtr.getLink() != null) { //because the tail does not have a link
+                nodePtr.setData(nodePtr.getLink().getData()); //we need to set the data of the node to the data's link
+                nodePtr = nodePtr.getLink(); //and then we move the nodePtr forward in the list
+           }
+           // store head data into last node
+           nodePtr.setData(temp);
+   }
+}     
+
+4. 4.Complete the following method for IntList assuming IntList is a circularly-linked list with a reference to the head of the list only.
+
+public void moveMaxToHead() throws EmptyListException {
+// Swaps the maximum element of the list with the head element.  
+   IntNode nodePtr = head;
+   IntNode maxPtr = head;     // pointer to node with max value
+   int temp;
+   if (head == null || tail == null) {   // is list empty?   
+        thow new RuntimeException("the list is empty");
+   } else {   // search list, setting maxPtr to node with max value
+              // until you examine the node before the head node
+        while (nodePtr.link() != head) { //(remember these are objects we are comparing) because this is a circularly linked list, we loop until the nodePtr.getLink() = head
+             nodePtr = nodePtr.getLink();   // advance one node
+             if (node.getData() > maxPtr.getData())
+                   maxPtr = nodePtr;
+        }
+        // swap first and max values
+        temp = head.getData();
+        head.setData(maxPtr.getData());
+        maxPtr.setData(temp);
+   }
+}
+
+5. A list can be implemented as an IntList that uses a linked sequence of IntNodes or using an array of type int. Assume that an int takes up 4 bytes in memory, a reference takes up 4 bytes in memory, and an array A is defined to hold up to 200 ints.
+(a)    If a list has 180 integers in it, which method (array or linked list) is more efficient in terms of memory usage? -> Array, because the array has a length of 200 while the linked list has a length of 180, the array would be more efficient -> List: 180*8 = 1440 bytes 	Array: 800 bytes
+
+(b)   If a list has 20 integers in it, which method (array or linked list) is more efficient in terms of memory usage? -> Linked list because the array has a length of 200 while the linked list has a length of 20 -> List: 20*8 = 160 bytes	Array: 800 bytes
+
+(c)    The array and linked list implementations require the same amount of memory if the list has how many elements?  (Do not include head in this calculation.) 4* 200 (array) = 8 * 100 -> 100
+
+
+6.  What is the output of the following algorithm (a) if x = 2?  (b) if x = 3?
+
+Let S be an empty intStack.
+y = 7
+while y > 0 do
+            if (y mod x != 0)   S.push(y)
+            else  output S.pop()
+            y = y - 1
+while not S.isEmpty()
+            output S.pop()
+
+6a.7 5 3 1  
+5,2, 1
+6b. 7, 4,1,2, 5
+
+7. Use the algorithm discussed in class to convert the following infix expression into postfix notation by showing the state of the operator stack at each point in the conversion.
+
+A * B / (C + D)
+$
+$ 		    	A
+$ *		    	A
+$ *			    A B
+$ /		    	A B *
+$ / (		  	A B *
+$ / ( 			A B * C
+$ / ( +			A B * C
+$ / ( +			A B * C D
+$ /		     	A B * C D +
+	  	    	A B * C D + /
+
+8. Let S be a stack that holds data of type Object. Assuming a is of type Location, explain if each statement is correct or not, and why.
+
+        (a)     S.push(a); -> OK, since the type Location is widened to Object, its parent class automatically in Java
+
+        (b)    a = S.pop(); -> NO, the data type returned will be of type Object, which must be narrowed to Location before it is stored in "a".  This can be done using typecasting. (note: this is exactly why we type cast when we pop an element and saving that to a variable)
+
+9.  Let SortedIntList be a class that uses IntNode nodes to create a singly-linked list such that the data is stored in decreasing order in the list. Assume that the class has two private instance variables head and tail of type IntNode. Write the following methods:
+
+public boolean remove(int item)
+Removes the item from the sorted list, if it exists, and returns true. Otherwise, returns false.
+public int maximum()
+Returns the maximum element in the sorted list, if the list is not empty. Otherwise, throws an exception.
+10.  Complete the following method in Java based on its specification:
+
+public int evaluate(String postfix)
+Evaluates the given postfix string using a stack.
+      Preconditions: 
+
+- The operands in the postfix string are single-digit integers.
+- The postfix string contains only operands and operators +,-,*, and /. 
+	(No spaces.)
+Postconditions:
+- Returns the integer value of the given postfix string if the string is a 
+	valid postfix string.
+      Notes:
+      - Integer division is used.
+      - You may assume the input string is a valid postfix expression.
+
+Special note:
+There are 10 possible digits in the string, but you can convert these to integers in the
+same way. Do not write a huge switch statement or if statement with 10 options! THINK!
